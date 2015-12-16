@@ -26,15 +26,17 @@ class NewVisitorTest(unittest.TestCase):
             'Enter a to-do item'
         )
 
-    # type this input into box
+        # type this input into box
         inputbox.send_keys('Buy peacock feathers')
 
-        inputbox.send_keys('Keys.ENTER')
+        inputbox.send_keys(Keys.RETURN)
+
 
         table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_element_by_tag_name('tr')
+        rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text == '1: Buy Peacock Feathers' for row in rows)
+            any(row.text == '1: Buy Peacock Feathers' for row in rows),
+            "New to-do item did not appear in table"
         )
 
         # next step
