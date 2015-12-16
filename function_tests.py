@@ -26,7 +26,7 @@ class NewVisitorTest(unittest.TestCase):
             'Enter a to-do item'
         )
 
-        # type this input into box
+        # add first item to the list
         inputbox.send_keys('Buy peacock feathers')
 
         inputbox.send_keys(Keys.RETURN)
@@ -34,10 +34,23 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1: Buy Peacock Feathers' for row in rows),
-            "New to-do item did not appear in table"
+        self.assertIn('1: Buy Peacock Feathers', [row.text for row in rows])
+
+
+        # add second item to the list
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Use peacock feathers to make fly')
+        inputbox.send_keys(Keys.ENTER)
+
+        # find the item
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(
+            '2: Use peacock feathers to make fly',
+            [row.text for row in rows]
         )
+
+        # Generate a unique url
 
         # next step
         self.fail("Finish the test")
