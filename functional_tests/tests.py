@@ -48,7 +48,6 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys( 'Use peacock feathers to make fly')
         inputbox.send_keys(Keys.ENTER)
         #
-        time.sleep(15)
 
         # # find the item
         self.check_for_row_in_list_table('2: Use peacock feathers to make fly')
@@ -57,6 +56,7 @@ class NewVisitorTest(LiveServerTestCase):
         # quit to wipe out all previous information
         self.browser.quit()
         self.browser = webdriver.Firefox()
+
 
 #
 #         # part 2
