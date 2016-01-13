@@ -1,6 +1,6 @@
 # Overview #
 
-An implemention of a Django toy app with with mercilessly test-driven design.    Based on the app in Harry Percival's ("Test-Driven Development with Python")[http://shop.oreilly.com/product/0636920029533.do].
+An implemention of a Django toy app with with mercilessly test-driven design.    Based on the app in Harry Percival's ["Test-Driven Development with Python"](http://shop.oreilly.com/product/0636920029533.do).
 
 App and testing framework of Django (Python 3) using python unit tests and Selenium.
 
