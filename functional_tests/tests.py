@@ -47,7 +47,6 @@ class NewVisitorTest(LiveServerTestCase):
         # get the text box inviting to add a new item
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feathers to make a fly')
-        time.sleep(5)
         inputbox.send_keys(Keys.ENTER)
         #
 
@@ -59,34 +58,24 @@ class NewVisitorTest(LiveServerTestCase):
         self.browser.quit()
         self.browser = webdriver.Firefox()
 
+    def test_layout_and_styling(self):
+        # Go to the home page
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
 
-#
-#         # part 2
-#         # Another person visits the home page
-#         # Previous list is wiped out
-#
-#
-#
-#         # next step
-#         self.fail("Finish the test")
-#         self.browser.get(self.live_server_url)
-#         page_text = self.browser.find_element_by_tag_name('body').text
-#         self.assertNotIn('Buy peackcock feathers', page_text)
-#         self.assertNotIn('make a fly', page_text)
-#
-#         # Start a new list and enter new items
-#
-#         inputbox = self.browser.find_element_by_id('id_new_item')
-#         inputbox.send_keys('Buy milk')
-#         inputbox.send_keys(Keys.ENTER)
-#
-#         # Assign a unique URL to this list--name "francis"
-#         francis_list_url = self.browser.current_url
-#         self.assertRegex(francis_list_url, '/lists/.+')
-#         self.assertNotEqual(francis_list_url, edith_list_url)
-#
-#         # Make sure there's no trace of previous list
-#         page_text = self.browser.find_element_by_tag_name('body').text
-#         self.assertNotIn('Buy peacock feathers', page_text)
-#         self.assertIn('Buy milk', page_text)
-#
+        # Input box is centered
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=5
+        )
+
+        # Start a new list and it is also well-centered
+        inputbox.send_keys('testing\n')
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=5
+        )
