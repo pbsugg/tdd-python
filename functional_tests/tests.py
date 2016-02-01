@@ -1,9 +1,25 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
+import sys
 
 class NewVisitorTest(StaticLiveServerTestCase):
+
+    @classmethod
+    def setupClass(cls):
+        for arg in sys.argv:
+            if 'liveserver' in arg:
+                cls.server_url = 'http://' + arg.split('=')[1]
+                return
+        super().setupClass()
+        cls.server_url = cls.live_server_url
+
+    @classmethod
+    def tearDownClass(cls):
+        if cls.server_url == cls.live_server_url:
+            super().tearDownClass()
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -20,7 +36,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
     def test_starts_a_list_and_retrieves_it_later(self):
         # get the homepage
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
 
         # notice page title and header mentions to-do lists
         self.assertIn('To-Do', self.browser.title)
@@ -60,7 +76,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
     def test_layout_and_styling(self):
         # Go to the home page
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         self.browser.set_window_size(1024, 768)
 
         # Input box is centered
